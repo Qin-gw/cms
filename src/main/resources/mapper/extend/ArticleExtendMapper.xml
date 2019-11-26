@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qin.apps.cms.dao.extend.ArticleExtendMapper">
+  <resultMap extends="com.qin.apps.cms.dao.ArticleMapper.BaseResultMap" type="com.qin.apps.cms.bean.extend.ArticleExtend" id="ResultMapExtend">
+    <association column="author_id" property="user" select="com.qin.apps.cms.dao.UserMapper.selectByPrimaryKey"></association>
+    <association column="category_id" property="category" select="com.qin.apps.cms.dao.CategoryMapper.selectByPrimaryKey"></association>
+    <collection column="id" property="comments" select="com.qin.apps.cms.dao.extend.CommentExtendMapper.selectCommenByArticleId"></collection>
+  </resultMap>
+  <select id="findArticleById" parameterType="java.lang.Long" resultMap="ResultMapExtend">
+  		select *
+  		from cms_article
+    	where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="cascadeFindAllArticle" resultMap="ResultMapExtend">
+  		select *
+  		from cms_article
+  </select>
+</mapper>

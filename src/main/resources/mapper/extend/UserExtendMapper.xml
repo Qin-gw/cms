@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qin.apps.cms.dao.extend.UserExtendMapper">
+
+  <resultMap extends="com.qin.apps.cms.dao.UserMapper.BaseResultMap" type="com.qin.apps.cms.bean.extend.UserExtend" id="ResultMapExtend">
+    <collection column="id" property="roles" select="com.qin.apps.cms.dao.extend.RoleExtendMapper.findRoletByUserId"></collection>
+  </resultMap>
+
+  <select id="findUserExtendByUserName" parameterType="java.lang.String" resultMap="ResultMapExtend">
+    select
+    <include refid="com.qin.apps.cms.dao.UserMapper.Base_Column_List" />
+    from base_user
+    where username = #{userName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAllUserExtend" parameterType="java.lang.Long" resultMap="ResultMapExtend">
+    select *
+    from base_user
+  </select>
+
+  <select id="findUserExtendById"  parameterType="java.lang.Long"  resultMap="ResultMapExtend">
+    SELECT *
+    FROM base_user
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>
